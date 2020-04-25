@@ -11,16 +11,12 @@ module.exports = {
       type: "string",
       required: true,
     },
+    game: {
+      model: "game",
+    },
     name: {
       type: "string",
       required: true,
-    },
-    gameId: {
-      type: "string",
-      required: true,
-    },
-    game: {
-      model: "game",
     },
     answers: {
       collection: "playeranswer",

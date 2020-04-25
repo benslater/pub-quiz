@@ -11,13 +11,9 @@ module.exports = {
       type: "string",
       required: true,
     },
-    // gameId: {
-    //   type: "string",
-    //   required: true,
-    // },
-    // game: {
-    //   model: "game",
-    // },
+    round: {
+      model: "round",
+    },
     question: {
       type: "string",
       required: true,
@@ -25,9 +21,6 @@ module.exports = {
     answer: {
       type: "string",
       required: true,
-    },
-    round: {
-      model: "round",
     },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

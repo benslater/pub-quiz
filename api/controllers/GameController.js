@@ -10,55 +10,34 @@ const randomWords = require("random-words");
 
 module.exports = {
   create: async (req, res) => {
-    // const {
-    //   body: { questions },
-    // } = req;
-    // const id = randomWords(2).join("-");
-
-    // await Game.create({
-    //   id,
-    //   open: false,
-    //   questionIndex: -1,
-    // }).fetch();
-    // await Promise.all(
-    //   questions.map(({ question, answer }) =>
-    //     Question.create({
-    //       id: uuid4(),
-    //       game: id,
-    //       gameId: id,
-    //       question,
-    //       answer,
-    //     }).fetch()
-    //   )
-    // );
-
-    // const gameResponse = await Game.findOne({ id })
-    //   .populate("players")
-    //   .populate("questions");
-
-    // res.send(gameResponse);
     const {
       body: { rounds },
     } = req;
-    console.log(req.body);
 
+    // Create a new game, with a random ID and default state.
+    // TODO: Extract default state to a separate constant (maybe in models file?)
     const id = randomWords(2).join("-");
-
     await Game.create({
       id,
-      questionIndex: -1,
+      state: {
+        started: false,
+        round: 0,
+        question: 0,
+      },
     }).fetch();
 
+    // Create an empty round for each round submitted by client
     const createdRounds = await Promise.all(
-      rounds.map(async (round, index) =>
+      rounds.map(async () =>
         Round.create({
           id: uuid4(),
           game: id,
-          gameId: id,
         }).fetch()
       )
     );
 
+    // For each round created in the db, create all questions, according to the questions submitted
+    // by the client.
     await Promise.all(
       createdRounds.map((round, index) =>
         Promise.all(
@@ -74,10 +53,25 @@ module.exports = {
       )
     );
 
+    // Retrieve the now-complete game, populating players (empty at this point), and rounds.
     const gameResponse = await Game.findOne({ id })
       .populate("players")
-      .populate("rounds")
-      .populate("questions");
+      .populate("rounds");
+
+    // Waterline cannot populate the questions on the retrieved rounds (TODO: can it actually?)
+    // For each created round, find the questions in the db that are associated to its ID,
+    // and set that property on the response object.
+    const questions = await Promise.all(
+      createdRounds.map((round) => Question.find({ round: round.id }))
+    );
+    gameResponse.rounds = gameResponse.rounds.map((round, index) => ({
+      ...round,
+      questions: questions[index],
+    }));
+
+    // Send the completed game back.
+    // TODO: Is this actually useful? (other than for debugging...) Do we need to know more than
+    // the fact that it succeeded? We'll be retrieving the whole game object via websocket later...
     res.send(gameResponse);
   },
 

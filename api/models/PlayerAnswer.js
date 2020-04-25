@@ -11,16 +11,12 @@ module.exports = {
       type: "string",
       required: true,
     },
-    gameId: {
-      type: "string",
-      required: true,
-    },
-    playerId: {
-      type: "string",
-      required: true,
-    },
     player: {
       model: "player",
+    },
+    answer: {
+      type: "string",
+      required: true,
     },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

@@ -7,30 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: {
-    //   type: "string",
-    //   required: true,
-    // },
-    // open: {
-    //   type: "boolean",
-    //   required: true,
-    // },
-    // questionIndex: {
-    //   type: "number",
-    //   required: true,
-    // },
-    // // questions: {
-    // //   collection: "question",
-    // //   via: "game",
-    // // },
-    // players: {
-    //   collection: "player",
-    //   via: "game",
-    // },
-    // rounds: {
-    //   collection: "round",
-    //   via: "game",
-    // },
     id: {
       type: "string",
       required: true,

@@ -11,10 +11,6 @@ module.exports = {
       type: "string",
       required: true,
     },
-    gameId: {
-      type: "string",
-      required: true,
-    },
     game: {
       model: "game",
     },
