@@ -23,10 +23,11 @@ module.exports.routes = {
   "POST /game/create": "GameController.create",
   "POST /game/purge": "GameController.purge",
   "POST /game/:id/questions": "GameController.setQuestions",
-  "POST /game/:id/join": "GameController.join",
+  "GET /game/:id/join": "GameController.join",
   "POST /game/:id/open": "GameController.open",
   "GET /game/:id/players": "GameController.players",
   "POST /game/:id/next": "GameController.next",
+  "POST /game/:id/answer": "GameController.answer",
 
   "GET /player/all": "PlayerController.findAll",
   "GET /player/:id": "PlayerController.find",

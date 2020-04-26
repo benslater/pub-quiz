@@ -22,6 +22,10 @@ module.exports = {
       type: "string",
       required: true,
     },
+    playerAnswers: {
+      collection: "playeranswer",
+      via: "question",
+    },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
