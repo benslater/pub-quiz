@@ -7,3 +7,4 @@ export const ROLES = {
 
 export const game = writable({});
 export const role = writable();
+export const player = writable({ name: "" });

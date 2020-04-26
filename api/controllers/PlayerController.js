@@ -19,7 +19,9 @@ module.exports = {
       return res.notFound();
     }
 
-    res.send(await Player.create({ id, name, gameId, game: gameId }).fetch());
+    res.send(
+      await Player.create({ id, game: gameId, name, answers: [] }).fetch()
+    );
   },
   find: async (req, res) => {
     const {

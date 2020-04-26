@@ -4,9 +4,7 @@
 
   export let currentRoute;
   export let params;
-  let gameValue = {
-    questionIndex: -1
-  };
+  let gameValue;
 
   const {
     namedParams: { id: gameId }
@@ -19,23 +17,16 @@
   });
 
   onMount(async () => {
-    // await fetch("http://localhost:1337/player/create", {
-    //   method: "POST",
-    //   mode: "no-cors",
-    //   body: JSON.stringify({
-    //     name,
-    //     gameId
-    //   })
-    // });
     io.socket.on("gameUpdate", data => {
       game.set(data.game);
       console.log(gameValue);
 
-      if (gameValue.questionIndex === gameValue.questions.length) {
+      // TODO: Move into template, just use gameValue.state to compute title.
+      // TODO: Add round title as well
+      if (gameValue.finished) {
         titleText = "Final scores:";
-      }
-      if (gameValue.questionIndex > -1) {
-        titleText = `Question ${gameValue.questionIndex + 1}`;
+      } else if (gameValue.state.started) {
+        titleText = `Question ${gameValue.state.question + 1}`;
       }
     });
     io.socket.post(`localhost:1337/game/${gameId}/join`, {
@@ -68,7 +59,10 @@
 <div>
   <h2>{titleText}</h2>
 
-  {#if gameValue && gameValue.questionIndex === -1}
+  <!-- TODO: Optional chaining support in rollup/eslint? -->
+  {#if gameValue && gameValue.state && gameValue.state.started}
+    <div />
+  {:else}
     {#if gameValue && gameValue.players && gameValue.players.length}
       {#each gameValue.players as player}
         <div>{player.name}</div>
@@ -79,13 +73,9 @@
     <div>...</div>
   {/if}
 
-  {#if gameValue && gameValue.questionIndex > -1}
-    {gameValue.questions[gameValue.questionIndex].question}
-  {/if}
-
   {#if $role === ROLES.HOST}
     <button on:click={nextQuestion}>
-      {gameValue && gameValue.questionIndex > -1 ? 'Next Question' : 'Start Game'}
+      {gameValue && gameValue.state && gameValue.state.started ? 'Next Question' : 'Start Game'}
     </button>
   {/if}
 </div>

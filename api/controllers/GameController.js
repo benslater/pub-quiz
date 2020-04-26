@@ -118,12 +118,16 @@ module.exports = {
       return res.badRequest();
     }
 
-    const game = await Game.findOne({ id }).populate("players");
+    const game = await Game.findOne({ id })
+      .populate("players")
+      .populate("rounds");
     if (!game) {
       // TODO: Conditional logic that includes host
       //  || !game.players.find((player) => player.name === name)
       return res.notFound();
     }
+
+    game.rounds = await Round.find({ game: game.id }).populate("questions");
 
     sails.sockets.join(req, id);
     sails.sockets.broadcast(id, "gameUpdate", { game });
@@ -142,16 +146,27 @@ module.exports = {
       params: { id },
     } = req;
 
-    const { questionIndex } = await Game.findOne({ id });
+    const game = Game.findOne({ id });
+    if (!game) {
+      return res.notFound();
+    }
 
-    await Game.updateOne({ id }).set({
-      questionIndex: questionIndex + 1,
+    if (!game.started) {
+      const updatedGame = await Game.updateOne({ id }).set({
+        state: { ...game.state, started: true, round: 0, question: 0 },
+      });
+      return sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
+    }
+
+    const updatedGame = await Game.updateOne({ id }).set({
+      state: {
+        started: true,
+        round: game.state.round,
+        question: game.state.question + 1,
+      },
     });
-    const game = await Game.findOne({ id })
-      .populate("players")
-      .populate("questions");
 
-    sails.sockets.broadcast(id, "gameUpdate", { game });
+    sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
     res.send();
   },
 };
