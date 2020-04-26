@@ -21,6 +21,9 @@
     });
     navigateTo(`/game/${gameId}`);
   };
+
+  // TODO: Recover into disconnected game
+  // TODO: Better player identity (e.g. FB/Google)
 </script>
 
 <style>
