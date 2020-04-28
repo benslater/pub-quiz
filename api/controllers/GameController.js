@@ -80,9 +80,7 @@ module.exports = {
       params: { id },
     } = req;
 
-    res.send(
-      await Game.findOne({ id }).populate("players").populate("questions")
-    );
+    res.send(await sails.helpers.getFullyPopulatedGame(id));
   },
 
   findAll: async (_, res) => {
@@ -118,16 +116,17 @@ module.exports = {
       return res.badRequest();
     }
 
-    const game = await Game.findOne({ id })
-      .populate("players")
-      .populate("rounds");
+    // const game = await Game.findOne({ id })
+    //   .populate("players")
+    //   .populate("rounds");
+    const game = await sails.helpers.getFullyPopulatedGame(id);
     if (!game) {
       // TODO: Conditional logic that includes host
       //  || !game.players.find((player) => player.name === name)
       return res.notFound();
     }
 
-    game.rounds = await Round.find({ game: game.id }).populate("questions");
+    // game.rounds = await Round.find({ game: game.id }).populate("questions");
 
     sails.sockets.join(req, id);
     sails.sockets.broadcast(id, "gameUpdate", { game });
@@ -146,28 +145,30 @@ module.exports = {
       params: { id },
     } = req;
 
-    const game = Game.findOne({ id });
+    let game = await Game.findOne({ id });
     if (!game) {
       return res.notFound();
     }
 
-    if (!game.started) {
-      const updatedGame = await Game.updateOne({ id })
-        .set({
-          state: { ...game.state, started: true, round: 0, question: 0 },
-        })
-        .populate("players")
-        .populate("rounds");
-      return sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
+    if (!game.state.started) {
+      await Game.updateOne({ id }).set({
+        state: { ...game.state, started: true, round: 0, question: 0 },
+      });
+      game = await sails.helpers.getFullyPopulatedGame(id);
+
+      sails.sockets.broadcast(id, "gameUpdate", { game });
+      return res.send();
     }
 
-    const updatedGame = await Game.updateOne({ id }).set({
+    await Game.updateOne({ id }).set({
       state: {
         started: true,
         round: game.state.round,
         question: game.state.question + 1,
       },
     });
+
+    game = await Game.findOne({ id }).populate("players").populate("rounds");
 
     sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
     res.send();
@@ -179,7 +180,7 @@ module.exports = {
       body: { name, questionId, answer },
     } = req;
 
-    const game = await Game.findOne({ id })
+    let game = await Game.findOne({ id })
       .populate("players")
       .populate("rounds");
     if (!game) {
@@ -190,21 +191,22 @@ module.exports = {
       return res.notFound();
     }
 
+    const player = await Player.findOne({ name });
+    if (!player) {
+      return res.notFound();
+    }
+
     await PlayerAnswer.create({
       id: uuid4(),
       // TODO: Player name not great. Send ID from client instead?
-      player: await Player.find({ name }).id,
+      player: player.id,
       question: question.id,
       answer,
     });
 
-    game.rounds[game.state.round].question[
-      game.state.question
-    ].playerAnswers = await PlayerAnswer.find({
-      question: questionId,
-    });
+    game = await sails.helpers.getFullyPopulatedGame(id);
 
-    // TODO: Need a consistent way to return a fully-populated game object
     sails.sockets.broadcast(id, "gameUpdate", { game });
+    res.send();
   },
 };

@@ -8,6 +8,8 @@
   let titleText = "Waiting for game to start...";
   // TODO: Base this off a response from the websocket
   let answerSubmitted = false;
+  let currentRound = 0;
+  let currentQuestion = 0;
 
   const {
     namedParams: { id: gameId }
@@ -24,6 +26,15 @@
         titleText = "Final scores:";
       } else if ($game.state.started) {
         titleText = `Question ${$game.state.question + 1}`;
+      }
+
+      if (currentRound !== $game.state.round) {
+        currentRound = $game.state.round;
+        answerSubmitted = false;
+      }
+      if (currentQuestion !== $game.state.question) {
+        currentQuestion = $game.state.question;
+        answerSubmitted = false;
       }
     });
     io.socket.get(`localhost:1337/game/${gameId}/join`);
@@ -71,7 +82,9 @@
           {/if}
         </div>
       </div>
-      <button disabled={answerSubmitted} on:click={submitAnswer}>Submit</button>
+      <button disabled={answerSubmitted} on:click={submitAnswer}>
+        {answerSubmitted ? 'Waiting for next question...' : 'Submit'}
+      </button>
     {/if}
   {:else}
     {#if $game && $game.players && $game.players.length}
