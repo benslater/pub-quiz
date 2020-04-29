@@ -115,10 +115,7 @@ module.exports = {
     if (!req.isSocket) {
       return res.badRequest();
     }
-
-    // const game = await Game.findOne({ id })
-    //   .populate("players")
-    //   .populate("rounds");
+    
     const game = await sails.helpers.getFullyPopulatedGame(id);
     if (!game) {
       // TODO: Conditional logic that includes host
@@ -168,7 +165,7 @@ module.exports = {
       },
     });
 
-    game = await Game.findOne({ id }).populate("players").populate("rounds");
+    game = await sails.helpers.getFullyPopulatedGame(id);
 
     sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
     res.send();
