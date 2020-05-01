@@ -142,39 +142,82 @@ module.exports = {
       params: { id },
     } = req;
 
-    let game = await Game.findOne({ id });
+    let game = await Game.findOne({ id }).populate("rounds");
     if (!game) {
       return res.notFound();
     }
 
+    // If game hasn't started, set `started` to true and other state to default. Broadcast and return.
     if (!game.state.started) {
       await Game.updateOne({ id }).set({
-        state: { ...game.state, started: true, round: 0, question: 0 },
+        state: {
+          started: true,
+          round: 0,
+          question: 0,
+          endOfRound: false,
+        },
       });
-      game = await sails.helpers.getFullyPopulatedGame(id);
 
+      // TODO: This seems to be becoming a common pattern. Pull into helper. `broadcastGameAndSendRes(res)`
+      game = await sails.helpers.getFullyPopulatedGame(id);
+      sails.sockets.broadcast(id, "gameUpdate", { game });
+      return res.send();
+    }
+    // If game is end of round, set `endOfRound` to false and other state to current.
+    // Broadcast and return.
+    if (game.state.endOfRound) {
+      await Game.updateOne({ id }).set({
+        state: {
+          ...game.state,
+          endOfRound: false,
+        },
+      });
+
+      game = await sails.helpers.getFullyPopulatedGame(id);
       sails.sockets.broadcast(id, "gameUpdate", { game });
       return res.send();
     }
 
+    // If game is last question in round, increment round, reset question, and set endOfRound.
+    // If last question of last round, set state.gameOver
+    // Broadcast and return;
+    const currentRound = await Round.findOne({
+      id: game.rounds[game.state.round].id,
+    }).populate("questions");
+    if (game.state.question === currentRound.questions.length - 1) {
+      await Game.updateOne({ id }).set({
+        state: {
+          ...game.state,
+          round: game.state.round + 1,
+          question: 0,
+          endOfRound: true,
+          gameOver: game.state.round === game.rounds.length - 1,
+        },
+      });
+
+      game = await sails.helpers.getFullyPopulatedGame(id);
+      sails.sockets.broadcast(id, "gameUpdate", { game });
+      return res.send();
+    }
+
+    // Otherwise, increment question. Broadcast and return.
     await Game.updateOne({ id }).set({
       state: {
-        started: true,
-        round: game.state.round,
+        ...game.state,
         question: game.state.question + 1,
       },
     });
 
     game = await sails.helpers.getFullyPopulatedGame(id);
 
-    sails.sockets.broadcast(id, "gameUpdate", { game: updatedGame });
-    res.send();
+    sails.sockets.broadcast(id, "gameUpdate", { game });
+    return res.send();
   },
 
   answer: async (req, res) => {
     const {
       params: { id },
-      body: { name, questionId, answer },
+      body: { playerId, questionId, answer },
     } = req;
 
     let game = await Game.findOne({ id })
@@ -188,14 +231,13 @@ module.exports = {
       return res.notFound();
     }
 
-    const player = await Player.findOne({ name });
+    const player = await Player.findOne({ id: playerId });
     if (!player) {
       return res.notFound();
     }
 
     await PlayerAnswer.create({
       id: uuid4(),
-      // TODO: Player name not great. Send ID from client instead?
       player: player.id,
       question: question.id,
       answer,
@@ -205,5 +247,22 @@ module.exports = {
 
     sails.sockets.broadcast(id, "gameUpdate", { game });
     res.send();
+  },
+
+  mark: async (req, res) => {
+    const {
+      params: { id, answerId },
+      body: { result },
+    } = req;
+
+    const answer = PlayerAnswer.findOne({ id: answerId });
+    if (!answer) {
+      res.notFound();
+    }
+
+    await PlayerAnswer.updateOne({ id: answerId }).set({ result });
+
+    const game = await sails.helpers.getFullyPopulatedGame(id);
+    sails.sockets.broadcast(id, "gameUpdate", { game });
   },
 };

@@ -21,6 +21,10 @@ module.exports = {
     question: {
       model: "question",
     },
+    // TODO: When ts enabled, add an enum for RESULT.CORRECT and RESULT.INCORRECT
+    result: {
+      type: "string",
+    },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
