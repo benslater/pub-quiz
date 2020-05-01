@@ -28,6 +28,7 @@ module.exports.routes = {
   "GET /game/:id/players": "GameController.players",
   "POST /game/:id/next": "GameController.next",
   "POST /game/:id/answer": "GameController.answer",
+  "POST /game/:id/answer/:answerId/mark": "GameController.mark",
 
   "GET /player/all": "PlayerController.findAll",
   "GET /player/:id": "PlayerController.find",

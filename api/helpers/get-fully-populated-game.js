@@ -19,22 +19,20 @@ module.exports = {
     },
     notFound: {
       description: "No user with the specified ID was found in the database.",
-      responseType: "notFound",
     },
   },
 
   fn: async ({ id }, exits) => {
     // Get fully populated game.
-    const game = await Game.findOne({ id })
-      .populate("players")
-      .populate("rounds");
-
+    const game = await Game.findOne({ id });
     if (!game) {
       // TODO: This is a 500, needs to be 404
       throw "notFound";
     }
-    game.rounds = await Round.find({ game: game.id }).populate("questions");
 
+    game.players = await Player.find({ game: game.id }).populate("answers");
+
+    game.rounds = await Round.find({ game: game.id }).populate("questions");
     game.rounds = await Promise.all(
       game.rounds.map(async (round) => ({
         ...round,

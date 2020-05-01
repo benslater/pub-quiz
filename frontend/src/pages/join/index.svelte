@@ -1,5 +1,6 @@
 <script>
   import { navigateTo } from "svelte-router-spa";
+  import { v4 as uuid4 } from "uuid";
   import { role, player, ROLES } from "../../stores";
 
   export let currentRoute;
@@ -10,15 +11,15 @@
 
   const goToGame = async () => {
     role.set(ROLES.PLAYER);
-    player.set({ name });
-    await fetch("http://localhost:1337/player/create", {
+    const res = await fetch("http://localhost:1337/player/create", {
       method: "POST",
-      mode: "no-cors",
       body: JSON.stringify({
         name,
         gameId
       })
     });
+    const { id } = await res.json();
+    player.set({ id, name });
     navigateTo(`/game/${gameId}`);
   };
 
