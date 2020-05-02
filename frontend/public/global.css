@@ -1410,9 +1410,9 @@ a {
   background-size: 4px 3px; */
 }
 a:visited {
-  text-decoration: none;
+  /* text-decoration: none;
 
-  color: #41403e;
+  color: #41403e; */
 }
 .alert-primary {
   color: #41403e;

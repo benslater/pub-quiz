@@ -5,6 +5,7 @@
   import PlayerScores from "./components/player-scores.svelte";
   import PlayerAnswers from "./components/player-answers.svelte";
   import AnswerInput from "./components/answer-input.svelte";
+  import LoadingDots from "../../components/loading-dots/index.svelte";
 
   import { game, role, ROLES, player } from "../../stores.js";
 
@@ -92,15 +93,64 @@
 </script>
 
 <style>
+  h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 
+    margin: 0;
+  }
+
+  .game-page {
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    height: 100%;
+    width: 100%;
+  }
+
+  .player-list {
+    flex: 4;
+
+    overflow: scroll;
+  }
+
+  .debug {
+    position: absolute;
+  }
+
+  .bottom-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+  }
+
+  .start-next-button {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  @media (min-width: 768px) {
+    .player-list {
+      width: 500px;
+      margin: auto;
+    }
+  }
 </style>
 
-<div>
-  <div>
+<div class="game-page">
+  <div class="debug">
     <button on:click={() => role.set(ROLES.HOST)}>HOST</button>
     <button on:click={() => role.set(ROLES.PLAYER)}>PLAYER</button>
   </div>
-  <h2>{titleText}</h2>
+  <h2 class="title">{titleText}</h2>
   <!-- TODO: Optional chaining support in rollup/eslint? $game?.state?.started-->
   {#if isGameStarted}
     {#if !isEndOfRound}
@@ -117,13 +167,26 @@
       <PlayerScores players={$game.players} />
     {/if}
   {:else if $game && $game.players && $game.players.length}
-    <PlayerList players={$game.players} />
+    <div class="player-list">
+      <PlayerList players={$game.players} />
+    </div>
     <!-- TODO: Animate the dots -->
-    <div>...</div>
+    {#if $role === ROLES.PLAYER}
+      <div class="bottom-section">
+        <div>Waiting for host to start game</div>
+        <LoadingDots />
+      </div>
+    {/if}
   {/if}
   {#if $role === ROLES.HOST && !($game && $game.state && $game.state.gameOver)}
-    <button disabled={nextDisabled} on:click={nextQuestion}>
-      {$game && $game.state && $game.state.started ? 'Next Question' : 'Start Game'}
-    </button>
+    <div class="bottom-section">
+      <button
+        class="start-next-button"
+        class:background-success={!nextDisabled}
+        disabled={nextDisabled}
+        on:click={nextQuestion}>
+        {$game && $game.state && $game.state.started ? 'Next Question' : 'Start Game'}
+      </button>
+    </div>
   {/if}
 </div>

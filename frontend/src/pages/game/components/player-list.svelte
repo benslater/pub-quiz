@@ -7,7 +7,10 @@
 </style>
 
 <div>
+  <h3>Players:</h3>
   {#each players as player}
-    <div>{player.name}</div>
+    <ul>
+      <li>{player.name}</li>
+    </ul>
   {/each}
 </div>
