@@ -56,6 +56,7 @@
   .delete-question-button-container {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .card {
@@ -100,30 +101,26 @@
             <hr />
           {/if}
           <div class="row">
-            <h4 class="col sm-1">Q{questionIndex + 1}:</h4>
-            <div class="col sm-5">
-              <div class="form-group">
-                <label for={`question-input-${questionIndex + 1}`}>
-                  Question:
-                </label>
-                <input
-                  bind:value={questions[questionIndex].question}
-                  class="input-block"
-                  type="text"
-                  id={`question-input-${questionIndex + 1}`} />
-              </div>
+            <h4 class="col sm-2">Q{questionIndex + 1}:</h4>
+            <div class="form-group col sm-4">
+              <label for={`question-input-${questionIndex + 1}`}>
+                Question:
+              </label>
+              <input
+                bind:value={questions[questionIndex].question}
+                class="input-block"
+                type="text"
+                id={`question-input-${questionIndex + 1}`} />
             </div>
-            <div class="col sm-5">
-              <div class="form-group">
-                <label for={`answer-input-${questionIndex + 1}`}>Answer:</label>
-                <input
-                  bind:value={questions[questionIndex].answer}
-                  class="input-block"
-                  type="text"
-                  id={`answer-input-${questionIndex + 1}`} />
-              </div>
+            <div class="form-group col sm-4">
+              <label for={`answer-input-${questionIndex + 1}`}>Answer:</label>
+              <input
+                bind:value={questions[questionIndex].answer}
+                class="input-block"
+                type="text"
+                id={`answer-input-${questionIndex + 1}`} />
             </div>
-            <div class="col sm-1 delete-question-button-container">
+            <div class="col sm-2 delete-question-button-container">
               <button class="background-danger delete-question-button">
                 {isMobile ? 'Delete question' : '✘'}
               </button>

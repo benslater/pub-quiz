@@ -5,10 +5,15 @@
 
 <style>
   main {
-    height: 100vh;
     width: 100vw;
-
+    height: 100vh;
     padding: 0 20px;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      padding: 0 50px;
+    }
   }
 </style>
 

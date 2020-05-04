@@ -1,57 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <script>
-      async function join() {
-        const response = await fetch("http://localhost:1337/player/create", {
-          method: "POST",
-          body: JSON.stringify({
-            name: "Player One",
-            gameId: "riding-transportation",
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+    <title>Quizzy</title>
 
-        const { gameId } = await response.json();
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/build/bundle.css" />
 
-        console.log(gameId);
-
-        io.socket.on("userJoin", function userJoined(data) {
-          console.log({ data });
-        });
-        io.socket.post("/game/riding-transportation/join", {
-          name: "Player One",
-        });
-      }
-    </script>
+    <script
+      type="text/javascript"
+      src="/dependencies/sails.io.js"
+      url="/"
+    ></script>
+    <script defer src="/build/bundle.js"></script>
   </head>
-  <body>
-    <button onclick="join()">
-      Join game riding-transportation as Player One
-    </button>
-  </body>
-  <!-- Simply include the sails.io.js script, and a client socket will be created for you -->
-  <script type="text/javascript" src="/dependencies/sails.io.js"></script>
-  <script type="text/javascript">
-    // The automatically-created socket is exposed as io.socket.
-    // Use .on() to subscribe to the 'user' event on the client.
-    // This event is sent by the Sails "create", "update",
-    // "delete", "add" and "remove" blueprints to any socket that
-    // is subscribed to one or more User model instances.
-    // io.socket.on("user", function gotHelloMessage(data) {
-    //   console.log("User alert!", data);
-    // });
-    // Using .get('/user') will retrieve a list of current User models,
-    // subscribe this socket to those models, AND subscribe this socket
-    // to notifications about new User models when they are created.
-    // io.socket.get("/user", function gotResponse(body, response) {
-    //   console.log("Current users: ", body);
-    // });
-  </script>
+
+  <body></body>
 </html>
