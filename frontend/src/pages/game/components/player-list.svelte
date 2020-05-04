@@ -3,7 +3,9 @@
 </script>
 
 <style>
-
+  h3 {
+    margin: 0 0 20px 0;
+  }
 </style>
 
 <div>

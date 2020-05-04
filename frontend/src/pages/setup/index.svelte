@@ -32,19 +32,36 @@
 </script>
 
 <style>
+  h4 {
+    white-space: pre;
+  }
+
   hr {
     margin-top: 40px;
   }
+
   .add-question-separator {
     margin: 40px 0;
   }
+
   .add-question-button-container {
     display: flex;
     justify-content: center;
   }
+
+  .delete-question-button {
+    width: 100%;
+  }
+
+  .delete-question-button-container {
+    display: flex;
+    align-items: center;
+  }
+
   .card {
     margin-bottom: 20px;
   }
+
   .add-question {
     width: 100%;
     max-width: 500px;
@@ -52,12 +69,21 @@
 
   .bottom-buttons {
     display: flex;
+
     margin-bottom: 20px;
   }
 
   .bottom-buttons button {
     flex: 1;
+
     margin: 0 20px;
+  }
+
+  @media (min-width: 768px) {
+    .delete-question-button {
+      width: 50px;
+      height: 50px;
+    }
   }
 </style>
 
@@ -97,9 +123,11 @@
                   id={`answer-input-${questionIndex + 1}`} />
               </div>
             </div>
-            <button class="col sm-1 background-danger">
-              {isMobile ? 'Delete question' : 'x'}
-            </button>
+            <div class="col sm-1 delete-question-button-container">
+              <button class="background-danger delete-question-button">
+                {isMobile ? 'Delete question' : '✘'}
+              </button>
+            </div>
           </div>
         {/each}
         <hr class="add-question-separator" />

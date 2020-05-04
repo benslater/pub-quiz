@@ -9,6 +9,8 @@
   let gameId = "";
   let name = "";
 
+  $: isJoinDisabled = !gameId.match(/\w-\w/) || name === "";
+
   const goToGame = async () => {
     role.set(ROLES.PLAYER);
     const res = await fetch("http://localhost:1337/player/create", {
@@ -28,30 +30,78 @@
 </script>
 
 <style>
+  /* A LOT of duplication here. Look into svelte layout */
+  h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 
+    margin: 0;
+  }
+
+  .join-page {
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    height: 100%;
+    width: 100%;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 4;
+  }
+
+  .bottom-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    max-width: 500px;
+  }
 </style>
 
-<div>
+<div class="join-page">
   <h2>Enter game ID:</h2>
-  <div class="form-group">
-    <label for="gameId">Game ID:</label>
-    <input
-      bind:value={gameId}
-      type="text"
-      placeholder="Enter game ID..."
-      id="gameId" />
+
+  <div class="inputs">
+    <div class="form-group">
+      <label for="gameId">Game ID:</label>
+      <input
+        bind:value={gameId}
+        type="text"
+        placeholder="Enter game ID..."
+        id="gameId" />
+    </div>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input
+        bind:value={name}
+        type="text"
+        placeholder="Enter name..."
+        id="name" />
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="name">Name:</label>
-    <input
-      bind:value={name}
-      type="text"
-      placeholder="Enter name..."
-      id="name" />
+  <div class="bottom-section">
+    <button
+      class:background-success={!isJoinDisabled}
+      disabled={isJoinDisabled}
+      on:click={goToGame}>
+      Join game
+    </button>
   </div>
-
-  <button disabled={!gameId.match(/\w-\w/) && name !== ''} on:click={goToGame}>
-    Join game
-  </button>
 </div>

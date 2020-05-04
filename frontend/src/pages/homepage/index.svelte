@@ -17,7 +17,7 @@
   }
 
   .button-container {
-    width: 50%;
+    width: 55%;
     max-width: 500px;
   }
 
