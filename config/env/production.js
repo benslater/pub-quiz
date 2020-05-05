@@ -227,6 +227,8 @@ module.exports = {
      ***************************************************************************/
     onlyAllowOrigins: [
       "http://localhost:1337",
+      "https://localhost:1337",
+      "http://quizzy-web-app.herokuapp.com",
       "https://quizzy-web-app.herokuapp.com",
     ],
 

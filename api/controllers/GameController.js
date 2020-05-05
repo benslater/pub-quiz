@@ -82,7 +82,9 @@ module.exports = {
       return res.badRequest();
     }
 
-    const game = await sails.helpers.getFullyPopulatedGame(gameId);
+    const game = await sails.helpers.getFullyPopulatedGame(
+      gameId.toLowerCase()
+    );
     if (!game) {
       // TODO: Conditional logic that includes host
       //  || !game.players.find((player) => player.name === name)

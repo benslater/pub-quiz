@@ -27,6 +27,10 @@
 
   // TODO: Recover into disconnected game
   // TODO: Better player identity (e.g. FB/Google)
+
+  const lowercaseInput = input => {
+    gameId = input.toLowerCase();
+  };
 </script>
 
 <style>
@@ -82,6 +86,7 @@
       <label for="gameId">Game ID:</label>
       <input
         bind:value={gameId}
+        on:input={lowercaseInput(gameId)}
         type="text"
         placeholder="Enter game ID..."
         id="gameId" />
