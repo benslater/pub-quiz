@@ -7,10 +7,10 @@
 
 module.exports = {
   attributes: {
-    id: {
-      type: "string",
-      required: true,
-    },
+    // id: {
+    //   type: "string",
+    //   required: true,
+    // },
     player: {
       model: "player",
     },

@@ -8,6 +8,7 @@
   import LoadingDots from "../../components/loading-dots/index.svelte";
 
   import { game, role, ROLES, player } from "../../stores.js";
+  import socket from "../../utils/socket";
 
   export let currentRoute;
   export let params;
@@ -41,7 +42,7 @@
   } = currentRoute;
 
   onMount(async () => {
-    io.socket.on("gameUpdate", data => {
+    socket.on("gameUpdate", data => {
       game.set(data.game);
       console.log($game);
 
@@ -69,15 +70,14 @@
         answerSubmitted = false;
       }
     });
-    io.socket.get(`localhost:1337/game/${gameId}/join`);
+    socket.get(`localhost:1337/game/${gameId}/join`);
   });
 
-  const nextQuestion = () =>
-    io.socket.post(`localhost:1337/game/${gameId}/next`);
+  const nextQuestion = () => socket.post(`localhost:1337/game/${gameId}/next`);
 
   const submitAnswer = answer => {
     answerSubmitted = true;
-    io.socket.post(`localhost:1337/game/${gameId}/answer`, {
+    socket.post(`localhost:1337/game/${gameId}/answer`, {
       playerId: $player.id,
       questionId: $game.rounds[roundIndex].questions[questionIndex].id,
       answer
@@ -85,7 +85,7 @@
   };
 
   const markAnswer = (answerId, result) => {
-    io.socket.post(`localhost:1337/game/${gameId}/answer/${answerId}/mark`, {
+    socket.post(`localhost:1337/game/${gameId}/answer/${answerId}/mark`, {
       result
     });
   };

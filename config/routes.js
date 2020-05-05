@@ -18,14 +18,8 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  "GET /game/all": "GameController.findAll",
-  "GET /game/:id": "GameController.find",
   "POST /game/create": "GameController.create",
-  "POST /game/purge": "GameController.purge",
-  "POST /game/:id/questions": "GameController.setQuestions",
   "GET /game/:id/join": "GameController.join",
-  "POST /game/:id/open": "GameController.open",
-  "GET /game/:id/players": "GameController.players",
   "POST /game/:id/next": "GameController.next",
   "POST /game/:id/answer": "GameController.answer",
   "POST /game/:id/answer/:answerId/mark": "GameController.mark",
@@ -46,4 +40,6 @@ module.exports.routes = {
    * not match any of those, it is matched against static assets.             *
    *                                                                          *
    ***************************************************************************/
+
+  "GET /get-csrf": { action: "security/grant-csrf-token" },
 };

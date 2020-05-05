@@ -12,16 +12,13 @@ module.exports = {
     const {
       body: { name, gameId },
     } = req;
-    const id = uuid4();
-    const game = await Game.find({ id: gameId });
+    const game = await Game.findOne({ gameId });
 
     if (!game) {
       return res.notFound();
     }
 
-    res.send(
-      await Player.create({ id, game: gameId, name, answers: [] }).fetch()
-    );
+    res.send(await Player.create({ game: game.id, name, answers: [] }).fetch());
   },
   find: async (req, res) => {
     const {

@@ -16,9 +16,9 @@ module.exports = {
 
     // Create a new game, with a random ID and default state.
     // TODO: Extract default state to a separate constant (maybe in models file?)
-    const id = randomWords(2).join("-");
-    await Game.create({
-      id,
+    const gameId = randomWords(2).join("-");
+    const game = await Game.create({
+      gameId,
       state: {
         started: false,
         round: 0,
@@ -30,8 +30,7 @@ module.exports = {
     const createdRounds = await Promise.all(
       rounds.map(async () =>
         Round.create({
-          id: uuid4(),
-          game: id,
+          game: game.id,
         }).fetch()
       )
     );
@@ -43,7 +42,6 @@ module.exports = {
         Promise.all(
           rounds[index].map((question) =>
             Question.create({
-              id: uuid4(),
               round: round.id,
               question: question.question,
               answer: question.answer,
@@ -54,7 +52,7 @@ module.exports = {
     );
 
     // Retrieve the now-complete game, populating players (empty at this point), and rounds.
-    const gameResponse = await Game.findOne({ id })
+    const gameResponse = await Game.findOne({ gameId })
       .populate("players")
       .populate("rounds");
 
@@ -75,81 +73,39 @@ module.exports = {
     res.send(gameResponse);
   },
 
-  find: async (req, res) => {
-    const {
-      params: { id },
-    } = req;
-
-    res.send(await sails.helpers.getFullyPopulatedGame(id));
-  },
-
-  findAll: async (_, res) => {
-    res.send(await Game.find());
-  },
-
-  purge: async (_, res) => {
-    res.send(await Game.destroy({}));
-  },
-
-  setQuestions: async (req, res) => {
-    const {
-      params: { id: gameId },
-      body: { questions },
-    } = req;
-    const id = uuid4();
-
-    const response = await Promise.all(
-      questions.map(({ question, answer }) =>
-        Question.create({ id, gameId, question, answer }).fetch()
-      )
-    );
-
-    res.send(response);
-  },
-
   join: async (req, res) => {
     const {
-      params: { id },
+      params: { id: gameId },
     } = req;
 
     if (!req.isSocket) {
       return res.badRequest();
     }
-    
-    const game = await sails.helpers.getFullyPopulatedGame(id);
+
+    const game = await sails.helpers.getFullyPopulatedGame(gameId);
     if (!game) {
       // TODO: Conditional logic that includes host
       //  || !game.players.find((player) => player.name === name)
       return res.notFound();
     }
 
-    // game.rounds = await Round.find({ game: game.id }).populate("questions");
-
-    sails.sockets.join(req, id);
-    sails.sockets.broadcast(id, "gameUpdate", { game });
-  },
-
-  open: async (req, res) => {
-    const {
-      params: { id },
-    } = req;
-
-    res.send(await Game.updateOne({ id }).set({ open: true }).fetch());
+    sails.sockets.join(req, gameId);
+    sails.sockets.broadcast(gameId, "gameUpdate", { game });
   },
 
   next: async (req, res) => {
     const {
-      params: { id },
+      params: { id: gameId },
     } = req;
 
-    let game = await Game.findOne({ id }).populate("rounds");
+    let game = await Game.findOne({ gameId }).populate("rounds");
     if (!game) {
       return res.notFound();
     }
 
     // If game hasn't started, set `started` to true and other state to default. Broadcast and return.
     if (!game.state.started) {
-      await Game.updateOne({ id }).set({
+      await Game.updateOne({ gameId }).set({
         state: {
           started: true,
           round: 0,
@@ -159,22 +115,22 @@ module.exports = {
       });
 
       // TODO: This seems to be becoming a common pattern. Pull into helper. `broadcastGameAndSendRes(res)`
-      game = await sails.helpers.getFullyPopulatedGame(id);
-      sails.sockets.broadcast(id, "gameUpdate", { game });
+      game = await sails.helpers.getFullyPopulatedGame(gameId);
+      sails.sockets.broadcast(gameId, "gameUpdate", { game });
       return res.send();
     }
     // If game is end of round, set `endOfRound` to false and other state to current.
     // Broadcast and return.
     if (game.state.endOfRound) {
-      await Game.updateOne({ id }).set({
+      await Game.updateOne({ gameId }).set({
         state: {
           ...game.state,
           endOfRound: false,
         },
       });
 
-      game = await sails.helpers.getFullyPopulatedGame(id);
-      sails.sockets.broadcast(id, "gameUpdate", { game });
+      game = await sails.helpers.getFullyPopulatedGame(gameId);
+      sails.sockets.broadcast(gameId, "gameUpdate", { game });
       return res.send();
     }
 
@@ -185,7 +141,7 @@ module.exports = {
       id: game.rounds[game.state.round].id,
     }).populate("questions");
     if (game.state.question === currentRound.questions.length - 1) {
-      await Game.updateOne({ id }).set({
+      await Game.updateOne({ gameId }).set({
         state: {
           ...game.state,
           round: game.state.round + 1,
@@ -195,32 +151,32 @@ module.exports = {
         },
       });
 
-      game = await sails.helpers.getFullyPopulatedGame(id);
-      sails.sockets.broadcast(id, "gameUpdate", { game });
+      game = await sails.helpers.getFullyPopulatedGame(gameId);
+      sails.sockets.broadcast(gameId, "gameUpdate", { game });
       return res.send();
     }
 
     // Otherwise, increment question. Broadcast and return.
-    await Game.updateOne({ id }).set({
+    await Game.updateOne({ gameId }).set({
       state: {
         ...game.state,
         question: game.state.question + 1,
       },
     });
 
-    game = await sails.helpers.getFullyPopulatedGame(id);
+    game = await sails.helpers.getFullyPopulatedGame(gameId);
 
-    sails.sockets.broadcast(id, "gameUpdate", { game });
+    sails.sockets.broadcast(gameId, "gameUpdate", { game });
     return res.send();
   },
 
   answer: async (req, res) => {
     const {
-      params: { id },
+      params: { id: gameId },
       body: { playerId, questionId, answer },
     } = req;
 
-    let game = await Game.findOne({ id })
+    let game = await Game.findOne({ gameId })
       .populate("players")
       .populate("rounds");
     if (!game) {
@@ -237,21 +193,20 @@ module.exports = {
     }
 
     await PlayerAnswer.create({
-      id: uuid4(),
       player: player.id,
       question: question.id,
       answer,
     });
 
-    game = await sails.helpers.getFullyPopulatedGame(id);
+    game = await sails.helpers.getFullyPopulatedGame(gameId);
 
-    sails.sockets.broadcast(id, "gameUpdate", { game });
+    sails.sockets.broadcast(gameId, "gameUpdate", { game });
     res.send();
   },
 
   mark: async (req, res) => {
     const {
-      params: { id, answerId },
+      params: { id: gameId, answerId },
       body: { result },
     } = req;
 
@@ -262,7 +217,7 @@ module.exports = {
 
     await PlayerAnswer.updateOne({ id: answerId }).set({ result });
 
-    const game = await sails.helpers.getFullyPopulatedGame(id);
-    sails.sockets.broadcast(id, "gameUpdate", { game });
+    const game = await sails.helpers.getFullyPopulatedGame(gameId);
+    sails.sockets.broadcast(gameId, "gameUpdate", { game });
   },
 };

@@ -2,7 +2,7 @@
   import { navigateTo } from "svelte-router-spa";
   import { v4 as uuid4 } from "uuid";
   import { role, player, ROLES } from "../../stores";
-
+  import request from "../../utils/request";
   export let currentRoute;
   export let params;
 
@@ -13,12 +13,12 @@
 
   const goToGame = async () => {
     role.set(ROLES.PLAYER);
-    const res = await fetch("http://localhost:1337/player/create", {
+    const res = await request("http://localhost:1337/player/create", {
       method: "POST",
-      body: JSON.stringify({
+      body: {
         name,
         gameId
-      })
+      }
     });
     const { id } = await res.json();
     player.set({ id, name });
@@ -33,36 +33,36 @@
   /* A LOT of duplication here. Look into svelte layout */
   h2 {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex: 1;
+    justify-content: center;
 
     margin: 0;
   }
 
   .join-page {
+    position: relative;
+
     display: flex;
     flex-direction: column;
 
-    position: relative;
-
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 
   .inputs {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     flex: 4;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .bottom-section {
     display: flex;
-    flex-direction: column;
-    flex: 1;
     align-items: center;
+    flex: 1;
+    flex-direction: column;
     justify-content: center;
 
     width: 100%;

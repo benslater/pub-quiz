@@ -4,7 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public -s"
+    "start": "sirv ../assets -s"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "11.0.2",
@@ -16,6 +16,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@rollup/plugin-replace": "^2.3.2",
     "sirv-cli": "^0.4.4",
     "svelte-router-spa": "^5.5.0",
     "uuid": "^8.0.0"
