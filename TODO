@@ -1,1 +1,9 @@
- - MUST use HTTPS or websocket fails
+  - Image rounds, music rounds
+  - Reconnect to game in progress
+  - Dockerise and redeploy with different host
+    - Will need replacement for heroku-provided things:
+      - Papertrail
+      - RedisToGo
+      - Heroku scheduler
+  - Task/Heroku Scheduler to clean db. Every midnight, remove games that are > 24h old
+  - Navigating to routes from initial page hit (e.g. hitting /setup server-side)

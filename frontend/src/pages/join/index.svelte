@@ -17,7 +17,7 @@
       method: "POST",
       body: {
         name,
-        gameId
+        gameId: gameId.toLowerCase()
       }
     });
     const { id } = await res.json();
