@@ -7,3 +7,7 @@
       - Heroku scheduler
   - Task/Heroku Scheduler to clean db. Every midnight, remove games that are > 24h old
   - Navigating to routes from initial page hit (e.g. hitting /setup server-side)
+  - Use layouts in svelte router to make a reusable header-main-footer style
+  - DX. Make dev and prod match. Fix CORS, fix CSRF.
+  - Better layout of game screen for host - particularly how incoming answers layout.
+  - Honestly probably rewrite in React and Django/Rails or something.
