@@ -70,14 +70,15 @@
         answerSubmitted = false;
       }
     });
-    socket.get(`localhost:1337/game/${gameId}/join`);
+    socket.get(`localhost:3000/api/game/${gameId}/join`);
   });
 
-  const nextQuestion = () => socket.post(`localhost:1337/game/${gameId}/next`);
+  const nextQuestion = () =>
+    socket.post(`localhost:3000/api/game/${gameId}/next`);
 
   const submitAnswer = answer => {
     answerSubmitted = true;
-    socket.post(`localhost:1337/game/${gameId}/answer`, {
+    socket.post(`localhost:3000/api/game/${gameId}/answer`, {
       playerId: $player.id,
       questionId: $game.rounds[roundIndex].questions[questionIndex].id,
       answer
@@ -85,7 +86,7 @@
   };
 
   const markAnswer = (answerId, result) => {
-    socket.post(`localhost:1337/game/${gameId}/answer/${answerId}/mark`, {
+    socket.post(`localhost:3000/api/game/${gameId}/answer/${answerId}/mark`, {
       result
     });
   };

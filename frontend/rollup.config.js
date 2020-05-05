@@ -17,7 +17,7 @@ export default {
   },
   plugins: [
     replace({
-      "http://localhost:1337": production ? "" : "http://localhost:1337",
+      "http://localhost:3000": production ? "" : "http://localhost:3000",
     }),
     svelte({
       // enable run-time checks when not in production

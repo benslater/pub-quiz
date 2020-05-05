@@ -2565,7 +2565,7 @@ var app = (function () {
     var request = async (url, opts) => {
       if (!_csrf) {
         const { _csrf: csrf } = await (
-          await fetch("http://localhost:1337/get-csrf")
+          await fetch("http://localhost:3000/api/get-csrf")
         ).json();
         _csrf = csrf;
       }
@@ -2606,7 +2606,7 @@ var app = (function () {
     		c: function create() {
     			hr = element("hr");
     			attr_dev(hr, "class", "svelte-1h3hu58");
-    			add_location(hr, file$2, 101, 12, 1794);
+    			add_location(hr, file$2, 101, 12, 1798);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, hr, anchor);
@@ -2692,29 +2692,29 @@ var app = (function () {
     			button = element("button");
     			t11 = text(t11_value);
     			attr_dev(h4, "class", "col sm-2 svelte-1h3hu58");
-    			add_location(h4, file$2, 104, 12, 1857);
+    			add_location(h4, file$2, 104, 12, 1861);
     			attr_dev(label0, "for", label0_for_value = `question-input-${/*questionIndex*/ ctx[17] + 1}`);
-    			add_location(label0, file$2, 106, 14, 1965);
+    			add_location(label0, file$2, 106, 14, 1969);
     			attr_dev(input0, "class", "input-block");
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "id", input0_id_value = `question-input-${/*questionIndex*/ ctx[17] + 1}`);
-    			add_location(input0, file$2, 109, 14, 2080);
+    			add_location(input0, file$2, 109, 14, 2084);
     			attr_dev(div0, "class", "form-group col sm-4");
-    			add_location(div0, file$2, 105, 12, 1917);
+    			add_location(div0, file$2, 105, 12, 1921);
     			attr_dev(label1, "for", label1_for_value = `answer-input-${/*questionIndex*/ ctx[17] + 1}`);
-    			add_location(label1, file$2, 116, 14, 2355);
+    			add_location(label1, file$2, 116, 14, 2359);
     			attr_dev(input1, "class", "input-block");
     			attr_dev(input1, "type", "text");
     			attr_dev(input1, "id", input1_id_value = `answer-input-${/*questionIndex*/ ctx[17] + 1}`);
-    			add_location(input1, file$2, 117, 14, 2434);
+    			add_location(input1, file$2, 117, 14, 2438);
     			attr_dev(div1, "class", "form-group col sm-4");
-    			add_location(div1, file$2, 115, 12, 2307);
+    			add_location(div1, file$2, 115, 12, 2311);
     			attr_dev(button, "class", "background-danger delete-question-button svelte-1h3hu58");
-    			add_location(button, file$2, 124, 14, 2727);
+    			add_location(button, file$2, 124, 14, 2731);
     			attr_dev(div2, "class", "col sm-2 delete-question-button-container svelte-1h3hu58");
-    			add_location(div2, file$2, 123, 12, 2657);
+    			add_location(div2, file$2, 123, 12, 2661);
     			attr_dev(div3, "class", "row");
-    			add_location(div3, file$2, 103, 10, 1827);
+    			add_location(div3, file$2, 103, 10, 1831);
     		},
     		m: function mount(target, anchor, remount) {
     			if (if_block) if_block.m(target, anchor);
@@ -2826,17 +2826,17 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Add question";
     			attr_dev(h3, "class", "");
-    			add_location(h3, file$2, 98, 8, 1654);
+    			add_location(h3, file$2, 98, 8, 1658);
     			attr_dev(hr, "class", "add-question-separator svelte-1h3hu58");
-    			add_location(hr, file$2, 130, 8, 2922);
+    			add_location(hr, file$2, 130, 8, 2926);
     			attr_dev(button, "class", "add-question background-primary svelte-1h3hu58");
-    			add_location(button, file$2, 132, 10, 3022);
+    			add_location(button, file$2, 132, 10, 3026);
     			attr_dev(div0, "class", "add-question-button-container svelte-1h3hu58");
-    			add_location(div0, file$2, 131, 8, 2968);
+    			add_location(div0, file$2, 131, 8, 2972);
     			attr_dev(div1, "class", "card-body");
-    			add_location(div1, file$2, 97, 6, 1622);
+    			add_location(div1, file$2, 97, 6, 1626);
     			attr_dev(div2, "class", "card svelte-1h3hu58");
-    			add_location(div2, file$2, 96, 4, 1597);
+    			add_location(div2, file$2, 96, 4, 1601);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, div2, anchor);
@@ -2940,14 +2940,14 @@ var app = (function () {
     			t4 = space();
     			button1 = element("button");
     			button1.textContent = "Create game";
-    			add_location(h2, file$2, 94, 2, 1514);
+    			add_location(h2, file$2, 94, 2, 1518);
     			attr_dev(button0, "class", "background-secondary svelte-1h3hu58");
-    			add_location(button0, file$2, 142, 4, 3265);
+    			add_location(button0, file$2, 142, 4, 3269);
     			attr_dev(button1, "class", "background-success svelte-1h3hu58");
-    			add_location(button1, file$2, 143, 4, 3345);
+    			add_location(button1, file$2, 143, 4, 3349);
     			attr_dev(div0, "class", "bottom-buttons svelte-1h3hu58");
-    			add_location(div0, file$2, 141, 2, 3232);
-    			add_location(div1, file$2, 93, 0, 1506);
+    			add_location(div0, file$2, 141, 2, 3236);
+    			add_location(div1, file$2, 93, 0, 1510);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3034,7 +3034,7 @@ var app = (function () {
     	};
 
     	const createGame = async () => {
-    		const res = await request("http://localhost:1337/game/create", { method: "POST", body: { rounds } });
+    		const res = await request("http://localhost:3000/api/game/create", { method: "POST", body: { rounds } });
     		const { gameId } = await res.json();
     		role.set(ROLES.HOST);
     		src_3(`/game/${gameId}`);
@@ -3264,33 +3264,33 @@ var app = (function () {
     			button = element("button");
     			t8 = text("Join game");
     			attr_dev(h2, "class", "svelte-2t2rph");
-    			add_location(h2, file$3, 81, 2, 1554);
+    			add_location(h2, file$3, 81, 2, 1558);
     			attr_dev(label0, "for", "gameId");
-    			add_location(label0, file$3, 85, 6, 1637);
+    			add_location(label0, file$3, 85, 6, 1641);
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "placeholder", "Enter game ID...");
     			attr_dev(input0, "id", "gameId");
-    			add_location(input0, file$3, 86, 6, 1680);
+    			add_location(input0, file$3, 86, 6, 1684);
     			attr_dev(div0, "class", "form-group");
-    			add_location(div0, file$3, 84, 4, 1606);
+    			add_location(div0, file$3, 84, 4, 1610);
     			attr_dev(label1, "for", "name");
-    			add_location(label1, file$3, 94, 6, 1885);
+    			add_location(label1, file$3, 94, 6, 1889);
     			attr_dev(input1, "type", "text");
     			attr_dev(input1, "placeholder", "Enter name...");
     			attr_dev(input1, "id", "name");
-    			add_location(input1, file$3, 95, 6, 1923);
+    			add_location(input1, file$3, 95, 6, 1927);
     			attr_dev(div1, "class", "form-group");
-    			add_location(div1, file$3, 93, 4, 1854);
+    			add_location(div1, file$3, 93, 4, 1858);
     			attr_dev(div2, "class", "inputs svelte-2t2rph");
-    			add_location(div2, file$3, 83, 2, 1581);
+    			add_location(div2, file$3, 83, 2, 1585);
     			button.disabled = /*isJoinDisabled*/ ctx[2];
     			attr_dev(button, "class", "svelte-2t2rph");
     			toggle_class(button, "background-success", !/*isJoinDisabled*/ ctx[2]);
-    			add_location(button, file$3, 104, 4, 2089);
+    			add_location(button, file$3, 104, 4, 2093);
     			attr_dev(div3, "class", "bottom-section svelte-2t2rph");
-    			add_location(div3, file$3, 103, 2, 2056);
+    			add_location(div3, file$3, 103, 2, 2060);
     			attr_dev(div4, "class", "join-page svelte-2t2rph");
-    			add_location(div4, file$3, 80, 0, 1528);
+    			add_location(div4, file$3, 80, 0, 1532);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3380,7 +3380,7 @@ var app = (function () {
     	const goToGame = async () => {
     		role.set(ROLES.PLAYER);
 
-    		const res = await request("http://localhost:1337/player/create", {
+    		const res = await request("http://localhost:3000/api/player/create", {
     			method: "POST",
     			body: { name, gameId: gameId.toLowerCase() }
     		});
@@ -4465,7 +4465,7 @@ var app = (function () {
       post: async (url, body) => {
         if (!_csrf$1) {
           const { _csrf: csrf } = await (
-            await fetch("http://localhost:1337/get-csrf")
+            await fetch("http://localhost:3000/api/get-csrf")
           ).json();
           _csrf$1 = csrf;
         }
@@ -4481,7 +4481,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$9 = "src/pages/game/index.svelte";
 
-    // (198:4) {:else}
+    // (199:4) {:else}
     function create_else_block_1(ctx) {
     	let div;
     	let t;
@@ -4503,7 +4503,7 @@ var app = (function () {
     			if (if_block) if_block.c();
     			if_block_anchor = empty();
     			attr_dev(div, "class", "player-list svelte-1b5fwep");
-    			add_location(div, file$9, 198, 6, 5149);
+    			add_location(div, file$9, 199, 6, 5169);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4563,14 +4563,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(198:4) {:else}",
+    		source: "(199:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (173:4) {#if isGameStarted}
+    // (174:4) {#if isGameStarted}
     function create_if_block_1$1(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -4658,14 +4658,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(173:4) {#if isGameStarted}",
+    		source: "(174:4) {#if isGameStarted}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (202:6) {#if $role === ROLES.PLAYER}
+    // (203:6) {#if $role === ROLES.PLAYER}
     function create_if_block_6(ctx) {
     	let div1;
     	let div0;
@@ -4680,9 +4680,9 @@ var app = (function () {
     			div0.textContent = "Waiting for host to start game";
     			t1 = space();
     			create_component(loadingdots.$$.fragment);
-    			add_location(div0, file$9, 203, 10, 5303);
+    			add_location(div0, file$9, 204, 10, 5323);
     			attr_dev(div1, "class", "bottom-section svelte-1b5fwep");
-    			add_location(div1, file$9, 202, 8, 5264);
+    			add_location(div1, file$9, 203, 8, 5284);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -4710,14 +4710,14 @@ var app = (function () {
     		block,
     		id: create_if_block_6.name,
     		type: "if",
-    		source: "(202:6) {#if $role === ROLES.PLAYER}",
+    		source: "(203:6) {#if $role === ROLES.PLAYER}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (193:118) 
+    // (194:118) 
     function create_if_block_5(ctx) {
     	let div;
     	let current;
@@ -4732,7 +4732,7 @@ var app = (function () {
     			div = element("div");
     			create_component(playerscores.$$.fragment);
     			attr_dev(div, "class", "player-scores svelte-1b5fwep");
-    			add_location(div, file$9, 193, 8, 5039);
+    			add_location(div, file$9, 194, 8, 5059);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4763,14 +4763,14 @@ var app = (function () {
     		block,
     		id: create_if_block_5.name,
     		type: "if",
-    		source: "(193:118) ",
+    		source: "(194:118) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (174:6) {#if !isEndOfRound}
+    // (175:6) {#if !isEndOfRound}
     function create_if_block_2$1(ctx) {
     	let h4;
     	let t1;
@@ -4807,9 +4807,9 @@ var app = (function () {
     			t4 = space();
     			if_block1.c();
     			if_block1_anchor = empty();
-    			add_location(h4, file$9, 174, 8, 4252);
+    			add_location(h4, file$9, 175, 8, 4272);
     			attr_dev(div, "class", "question-answer-text svelte-1b5fwep");
-    			add_location(div, file$9, 175, 8, 4279);
+    			add_location(div, file$9, 176, 8, 4299);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h4, anchor);
@@ -4888,14 +4888,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2$1.name,
     		type: "if",
-    		source: "(174:6) {#if !isEndOfRound}",
+    		source: "(175:6) {#if !isEndOfRound}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (177:8) {#if $role === ROLES.HOST}
+    // (178:8) {#if $role === ROLES.HOST}
     function create_if_block_4(ctx) {
     	let h4;
     	let t1;
@@ -4910,9 +4910,9 @@ var app = (function () {
     			t1 = space();
     			div = element("div");
     			t2 = text(t2_value);
-    			add_location(h4, file$9, 177, 10, 4391);
+    			add_location(h4, file$9, 178, 10, 4411);
     			attr_dev(div, "class", "question-answer-text svelte-1b5fwep");
-    			add_location(div, file$9, 178, 10, 4418);
+    			add_location(div, file$9, 179, 10, 4438);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h4, anchor);
@@ -4934,14 +4934,14 @@ var app = (function () {
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(177:8) {#if $role === ROLES.HOST}",
+    		source: "(178:8) {#if $role === ROLES.HOST}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (188:8) {:else}
+    // (189:8) {:else}
     function create_else_block(ctx) {
     	let div;
     	let current;
@@ -4959,7 +4959,7 @@ var app = (function () {
     			div = element("div");
     			create_component(playeranswers.$$.fragment);
     			attr_dev(div, "class", "player-answers svelte-1b5fwep");
-    			add_location(div, file$9, 188, 10, 4772);
+    			add_location(div, file$9, 189, 10, 4792);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4990,14 +4990,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(188:8) {:else}",
+    		source: "(189:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (181:8) {#if $role === ROLES.PLAYER}
+    // (182:8) {#if $role === ROLES.PLAYER}
     function create_if_block_3(ctx) {
     	let div;
     	let current;
@@ -5016,7 +5016,7 @@ var app = (function () {
     			div = element("div");
     			create_component(answerinput.$$.fragment);
     			attr_dev(div, "class", "answer-input svelte-1b5fwep");
-    			add_location(div, file$9, 181, 10, 4544);
+    			add_location(div, file$9, 182, 10, 4564);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5048,14 +5048,14 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(181:8) {#if $role === ROLES.PLAYER}",
+    		source: "(182:8) {#if $role === ROLES.PLAYER}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (210:2) {#if $role === ROLES.HOST && !($game && $game.state && $game.state.gameOver)}
+    // (211:2) {#if $role === ROLES.HOST && !($game && $game.state && $game.state.gameOver)}
     function create_if_block$2(ctx) {
     	let div;
     	let button;
@@ -5075,9 +5075,9 @@ var app = (function () {
     			attr_dev(button, "class", "start-next-button svelte-1b5fwep");
     			button.disabled = /*nextDisabled*/ ctx[9];
     			toggle_class(button, "background-success", !/*nextDisabled*/ ctx[9]);
-    			add_location(button, file$9, 211, 6, 5536);
+    			add_location(button, file$9, 212, 6, 5556);
     			attr_dev(div, "class", "bottom-section svelte-1b5fwep");
-    			add_location(div, file$9, 210, 4, 5501);
+    			add_location(div, file$9, 211, 4, 5521);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, div, anchor);
@@ -5109,7 +5109,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(210:2) {#if $role === ROLES.HOST && !($game && $game.state && $game.state.gameOver)}",
+    		source: "(211:2) {#if $role === ROLES.HOST && !($game && $game.state && $game.state.gameOver)}",
     		ctx
     	});
 
@@ -5149,11 +5149,11 @@ var app = (function () {
     			t2 = space();
     			if (if_block1) if_block1.c();
     			attr_dev(h2, "class", "title svelte-1b5fwep");
-    			add_location(h2, file$9, 169, 2, 4046);
+    			add_location(h2, file$9, 170, 2, 4066);
     			attr_dev(div0, "class", "main-section svelte-1b5fwep");
-    			add_location(div0, file$9, 170, 2, 4083);
+    			add_location(div0, file$9, 171, 2, 4103);
     			attr_dev(div1, "class", "game-page svelte-1b5fwep");
-    			add_location(div1, file$9, 168, 0, 4020);
+    			add_location(div1, file$9, 169, 0, 4040);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5294,15 +5294,15 @@ var app = (function () {
     			}
     		});
 
-    		socket.get(`localhost:1337/game/${gameId}/join`);
+    		socket.get(`localhost:3000/api/game/${gameId}/join`);
     	});
 
-    	const nextQuestion = () => socket.post(`localhost:1337/game/${gameId}/next`);
+    	const nextQuestion = () => socket.post(`localhost:3000/api/game/${gameId}/next`);
 
     	const submitAnswer = answer => {
     		$$invalidate(1, answerSubmitted = true);
 
-    		socket.post(`localhost:1337/game/${gameId}/answer`, {
+    		socket.post(`localhost:3000/api/game/${gameId}/answer`, {
     			playerId: $player.id,
     			questionId: $game.rounds[roundIndex].questions[questionIndex].id,
     			answer
@@ -5310,7 +5310,7 @@ var app = (function () {
     	};
 
     	const markAnswer = (answerId, result) => {
-    		socket.post(`localhost:1337/game/${gameId}/answer/${answerId}/mark`, { result });
+    		socket.post(`localhost:3000/api/game/${gameId}/answer/${answerId}/mark`, { result });
     	};
 
     	const writable_props = ["currentRoute", "params"];

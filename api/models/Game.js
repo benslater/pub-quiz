@@ -7,10 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: {
-    //   type: "string",
-    //   required: true,
-    // },
     gameId: {
       type: "string",
       required: true,

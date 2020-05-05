@@ -3,7 +3,7 @@ let _csrf;
 export default async (url, opts) => {
   if (!_csrf) {
     const { _csrf: csrf } = await (
-      await fetch("http://localhost:1337/get-csrf")
+      await fetch("http://localhost:3000/api/get-csrf")
     ).json();
     _csrf = csrf;
   }

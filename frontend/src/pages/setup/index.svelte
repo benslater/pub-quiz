@@ -19,7 +19,7 @@
   };
 
   const createGame = async () => {
-    const res = await request("http://localhost:1337/game/create", {
+    const res = await request("http://localhost:3000/api/game/create", {
       method: "POST",
       body: {
         rounds

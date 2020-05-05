@@ -18,18 +18,18 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  "POST /game/create": "GameController.create",
-  "GET /game/:id/join": "GameController.join",
-  "POST /game/:id/next": "GameController.next",
-  "POST /game/:id/answer": "GameController.answer",
-  "POST /game/:id/answer/:answerId/mark": "GameController.mark",
+  "POST /api/game/create": "GameController.create",
+  "GET /api/game/:id/join": "GameController.join",
+  "POST /api/game/:id/next": "GameController.next",
+  "POST /api/game/:id/answer": "GameController.answer",
+  "POST /api/game/:id/answer/:answerId/mark": "GameController.mark",
 
-  "GET /player/all": "PlayerController.findAll",
-  "GET /player/:id": "PlayerController.find",
-  "POST /player/create": "PlayerController.create",
-  "POST /player/purge": "PlayerController.purge",
+  "GET /api/player/all": "PlayerController.findAll",
+  "GET /api/player/:id": "PlayerController.find",
+  "POST /api/player/create": "PlayerController.create",
+  "POST /api/player/purge": "PlayerController.purge",
 
-  "GET /question/all": "QuestionController.findAll",
+  "GET /api/question/all": "QuestionController.findAll",
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *
@@ -41,5 +41,7 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  "GET /get-csrf": { action: "security/grant-csrf-token" },
+  "GET /api/get-csrf": { action: "security/grant-csrf-token" },
+
+  "GET *": "/",
 };

@@ -7,10 +7,6 @@
 
 module.exports = {
   attributes: {
-    // id: {
-    //   type: "string",
-    //   required: true,
-    // },
     round: {
       model: "round",
     },

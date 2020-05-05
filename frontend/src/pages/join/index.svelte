@@ -13,7 +13,7 @@
 
   const goToGame = async () => {
     role.set(ROLES.PLAYER);
-    const res = await request("http://localhost:1337/player/create", {
+    const res = await request("http://localhost:3000/api/player/create", {
       method: "POST",
       body: {
         name,
