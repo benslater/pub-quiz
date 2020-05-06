@@ -19,6 +19,7 @@
   "dependencies": {
     "@rollup/plugin-replace": "^2.3.2",
     "express": "^4.17.1",
+    "js-cookie": "^2.2.1",
     "sirv-cli": "^0.4.4",
     "svelte-router-spa": "^5.5.0",
     "uuid": "^8.0.0"

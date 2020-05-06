@@ -1,7 +1,8 @@
 <script>
   import { navigateTo } from "svelte-router-spa";
   import { v4 as uuid4 } from "uuid";
-  import { role, player, ROLES } from "../../stores";
+
+  import { game, role, player, ROLES } from "../../stores";
   import request from "../../utils/request";
   export let currentRoute;
   export let params;

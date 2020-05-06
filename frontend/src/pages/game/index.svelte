@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import Cookies from "js-cookie";
 
   import PlayerList from "./components/player-list.svelte";
   import PlayerScores from "./components/player-scores.svelte";
@@ -44,7 +45,18 @@
   onMount(async () => {
     socket.on("gameUpdate", data => {
       game.set(data.game);
-      console.log($game);
+
+      if (!Cookies.getJSON("gameInProgress")) {
+        Cookies.set(
+          "gameInProgress",
+          {
+            player: $player,
+            game: { id: $game.id, gameId: $game.gameId },
+            role: $role
+          },
+          { expires: 1 }
+        );
+      }
 
       // TODO: Move into template, just use $game.state to compute title.
       if ($game.state.started) {
@@ -53,6 +65,7 @@
       }
       if ($game.state.finished) {
         titleText = "Final scores:";
+        Cookies.remove("gameInProgress");
       }
       if ($game.state.endOfRound) {
         titleText = "End of round!";

@@ -93,6 +93,7 @@ module.exports = {
 
     sails.sockets.join(req, gameId);
     sails.sockets.broadcast(gameId, "gameUpdate", { game });
+    res.send(game);
   },
 
   next: async (req, res) => {

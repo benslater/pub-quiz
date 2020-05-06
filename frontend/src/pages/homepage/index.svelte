@@ -1,19 +1,40 @@
 <script>
-  import { Navigate } from "svelte-router-spa";
+  import { onMount } from "svelte";
+  import { Navigate, navigateTo } from "svelte-router-spa";
+  import Cookies from "js-cookie";
+
+  import { game, player, role, ROLES } from "../../stores";
 
   export let currentRoute;
   export let params;
+  const gameInProgress = Cookies.getJSON("gameInProgress");
+
+  onMount(() => {
+    if (gameInProgress) {
+      document.getElementById("reconnect-modal").click();
+    }
+  });
+
+  const rejoinGame = () => {
+    if (gameInProgress.role === ROLES.HOST) {
+      role.set(ROLES.HOST);
+    } else {
+      player.set(gameInProgress.player);
+      role.set(ROLES.PLAYER);
+    }
+    navigateTo(`/game/${gameInProgress.game.gameId}`);
+  };
 </script>
 
 <style>
   .homepage {
-    height: 100%;
-    width: 100%;
-
     display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+
+    width: 100%;
+    height: 100%;
   }
 
   .button-container {
@@ -22,8 +43,8 @@
   }
 
   button {
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 
   .about {
@@ -35,6 +56,24 @@
 </style>
 
 <div class="homepage">
+  <input class="modal-state" id="reconnect-modal" type="checkbox" />
+  <div class="modal">
+    <label class="modal-bg" for="reconnect-modal" />
+    <div class="modal-body">
+      <label class="btn-close" for="reconnect-modal">X</label>
+      <h4 class="modal-title">It looks like you have a game in progress!</h4>
+      <!-- <h5 class="modal-subtitle">Modal Subtitle</h5> -->
+      <p class="modal-text">
+        Do you want to rejoin the game
+        <span class="text-muted">
+          {gameInProgress && gameInProgress.game.gameId}
+        </span>
+        ?
+      </p>
+      <button on:click={rejoinGame}>Rejoin</button>
+      <label for="reconnect-modal" class="paper-btn">Close</label>
+    </div>
+  </div>
   <div class="button-container">
     <Navigate to="/setup">
       <button>Start new game</button>
