@@ -40,5 +40,10 @@ module.exports.routes = {
 
   "GET /api/get-csrf": { action: "security/grant-csrf-token" },
 
-  "GET *": "/",
+  "GET /": { view: "pages/homepage" },
+  // Serve homepage for anything that's not "/", except assets
+  "GET /*": {
+    view: "pages/homepage",
+    skipAssets: true,
+  },
 };

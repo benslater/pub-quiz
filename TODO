@@ -17,3 +17,5 @@
   - Typescript
   - Optional chaining support in rollup?
   - Split game for host and player into separate pages
+  - Deploy script including:
+    - Build frontend
