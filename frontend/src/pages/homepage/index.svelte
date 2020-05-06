@@ -37,6 +37,17 @@
     height: 100%;
   }
 
+  .rejoin-button-container > * {
+    width: 30%;
+
+    text-align: center;
+  }
+
+  .rejoin-button-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
   .button-container {
     width: 55%;
     max-width: 500px;
@@ -56,13 +67,13 @@
 </style>
 
 <div class="homepage">
+  <!-- TODO: Make this a component -->
   <input class="modal-state" id="reconnect-modal" type="checkbox" />
   <div class="modal">
     <label class="modal-bg" for="reconnect-modal" />
     <div class="modal-body">
       <label class="btn-close" for="reconnect-modal">X</label>
       <h4 class="modal-title">It looks like you have a game in progress!</h4>
-      <!-- <h5 class="modal-subtitle">Modal Subtitle</h5> -->
       <p class="modal-text">
         Do you want to rejoin the game
         <span class="text-muted">
@@ -70,8 +81,10 @@
         </span>
         ?
       </p>
-      <button on:click={rejoinGame}>Rejoin</button>
-      <label for="reconnect-modal" class="paper-btn">Close</label>
+      <div class="rejoin-button-container">
+        <button on:click={rejoinGame}>Yes</button>
+        <label class="paper-btn" for="reconnect-modal">No</label>
+      </div>
     </div>
   </div>
   <div class="button-container">
