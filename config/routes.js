@@ -24,10 +24,7 @@ module.exports.routes = {
   "POST /api/game/:id/answer": "GameController.answer",
   "POST /api/game/:id/answer/:answerId/mark": "GameController.mark",
 
-  "GET /api/player/all": "PlayerController.findAll",
-  "GET /api/player/:id": "PlayerController.find",
   "POST /api/player/create": "PlayerController.create",
-  "POST /api/player/purge": "PlayerController.purge",
 
   "GET /api/question/all": "QuestionController.findAll",
   /***************************************************************************

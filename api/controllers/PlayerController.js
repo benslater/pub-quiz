@@ -20,17 +20,4 @@ module.exports = {
 
     res.send(await Player.create({ game: game.id, name, answers: [] }).fetch());
   },
-  find: async (req, res) => {
-    const {
-      params: { id },
-    } = req;
-
-    res.send(await Player.find({ id }));
-  },
-  findAll: async (_, res) => {
-    res.send(await Player.find());
-  },
-  purge: async (_, res) => {
-    res.send(await Player.destroy({}));
-  },
 };

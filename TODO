@@ -1,5 +1,8 @@
+  - Various TODOs scattered throughout code
   - Image rounds, music rounds
   - Reconnect to game in progress
+    - On homepage mount, make request to backend to find games in progress, based on cookie stored in frontend
+    - If unfinished matching game(s), display as list, click to make request to backend to rejoin
   - Dockerise and redeploy with different host
     - Will need replacement for heroku-provided things:
       - Papertrail
@@ -11,3 +14,6 @@
   - DX. Make dev and prod match. Fix CORS, fix CSRF.
   - Better layout of game screen for host - particularly how incoming answers layout.
   - Honestly probably rewrite in React and Django/Rails or something.
+  - Typescript
+  - Optional chaining support in rollup?
+  - Split game for host and player into separate pages
