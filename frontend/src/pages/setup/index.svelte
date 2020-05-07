@@ -30,6 +30,11 @@
     role.set(ROLES.HOST);
     navigateTo(`/game/${gameId}`);
   };
+
+  const deleteQuestion = (roundIndex, questionIndex) => {
+    rounds[roundIndex].splice(questionIndex, 1);
+    rounds = rounds;
+  };
 </script>
 
 <style>
@@ -122,7 +127,9 @@
                 id={`answer-input-${questionIndex + 1}`} />
             </div>
             <div class="col sm-2 delete-question-button-container">
-              <button class="background-danger delete-question-button">
+              <button
+                class="background-danger delete-question-button"
+                on:click={() => deleteQuestion(roundIndex, questionIndex)}>
                 {isMobile ? 'Delete question' : '✘'}
               </button>
             </div>
