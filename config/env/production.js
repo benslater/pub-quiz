@@ -230,6 +230,8 @@ module.exports = {
       "https://localhost:1337",
       "http://quizzy-web-app.herokuapp.com",
       "https://quizzy-web-app.herokuapp.com",
+      "http://quizzy.host",
+      "https://quizzy.host",
     ],
 
     /***************************************************************************

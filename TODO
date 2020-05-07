@@ -19,3 +19,7 @@
   - Split game for host and player into separate pages
   - Deploy script including:
     - Build frontend
+
+
+URGENT:
+  - 400 in prod for websocket    
