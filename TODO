@@ -1,15 +1,14 @@
   - Various TODOs scattered throughout code
   - Image rounds, music rounds
   - Reconnect to game in progress
-    - On homepage mount, make request to backend to find games in progress, based on cookie stored in frontend
-    - If unfinished matching game(s), display as list, click to make request to backend to rejoin
+    - Currently uses cookie and assumes game exists. Make request to backend to check.
   - Dockerise and redeploy with different host
     - Will need replacement for heroku-provided things:
       - Papertrail
       - RedisToGo
       - Heroku scheduler
   - Task/Heroku Scheduler to clean db. Every midnight, remove games that are > 24h old
-  - Navigating to routes from initial page hit (e.g. hitting /setup server-side)
+  - Navigating to routes from initial page hit (e.g. hitting /setup server-side) more correctly (e.g. going to game directly to rejoin)
   - Use layouts in svelte router to make a reusable header-main-footer style
   - DX. Make dev and prod match. Fix CORS, fix CSRF.
   - Better layout of game screen for host - particularly how incoming answers layout.
@@ -19,4 +18,3 @@
   - Split game for host and player into separate pages
   - Deploy script including:
     - Build frontend
-  - Make delete question button work

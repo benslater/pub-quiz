@@ -213,7 +213,7 @@ module.exports = {
       body: { result },
     } = req;
 
-    const answer = PlayerAnswer.findOne({ id: answerId });
+    const answer = await PlayerAnswer.findOne({ id: answerId });
     if (!answer) {
       res.notFound();
     }

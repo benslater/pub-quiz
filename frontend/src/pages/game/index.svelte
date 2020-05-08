@@ -106,6 +106,10 @@
 </script>
 
 <style>
+  hr {
+    margin: 50px 0;
+  }
+
   h2 {
     display: flex;
     align-items: center;
@@ -113,6 +117,10 @@
     justify-content: center;
 
     margin: 0;
+  }
+
+  h4 {
+    margin: 20px 0;
   }
 
   .game-page {
@@ -132,6 +140,10 @@
     flex-direction: column;
 
     padding: 20px 0 0 0;
+  }
+
+  .question-answer {
+    flex: 1;
   }
 
   .question-answer-text {
@@ -186,12 +198,14 @@
     <!-- TODO: Optional chaining support in rollup/eslint? $game?.state?.started-->
     {#if isGameStarted}
       {#if !isEndOfRound}
-        <h4>Question:</h4>
-        <div class="question-answer-text">{currentQuestion.question}</div>
-        {#if $role === ROLES.HOST}
-          <h4>Answer:</h4>
-          <div class="question-answer-text">{currentQuestion.answer}</div>
-        {/if}
+        <div class="question-answer">
+          <h4>Question:</h4>
+          <div class="question-answer-text">{currentQuestion.question}</div>
+          {#if $role === ROLES.HOST}
+            <h4>Answer:</h4>
+            <div class="question-answer-text">{currentQuestion.answer}</div>
+          {/if}
+        </div>
         {#if $role === ROLES.PLAYER}
           <div class="answer-input">
             <AnswerInput
@@ -201,6 +215,8 @@
           </div>
         {:else}
           <div class="player-answers">
+            <hr />
+            <h4>Player answers:</h4>
             <PlayerAnswers answers={playerAnswers} onMarkAnswer={markAnswer} />
           </div>
         {/if}

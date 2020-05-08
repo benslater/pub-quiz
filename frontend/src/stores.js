@@ -6,5 +6,5 @@ export const ROLES = {
 };
 
 export const game = writable({});
-export const role = writable();
+export const role = writable(ROLES.HOST);
 export const player = writable({ id: "", name: "" });
