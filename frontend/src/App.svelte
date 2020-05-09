@@ -1,6 +1,10 @@
 <script>
   import { Router } from "svelte-router-spa";
   import { routes } from "./routes";
+  // If these aren't imported here, rollup won't replace the http://localhost:3000
+  // TODO: Fix better
+  import request from "./utils/request";
+  import socket from "./utils/socket";
 </script>
 
 <style>
